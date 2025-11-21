@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Jarurat Care — Jaisi Jarurat, Vaisi Care</title>
+<meta name="description" content="Jarurat Care — community-led cancer support for patients & families."/>
+<style>
+  /* ---------- RESET & BASE ---------- */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#0f172a;background:#f5f7fb;scroll-behavior:smooth}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  :root{
+    --footer-blue:#021b2c;
+    --nav-blue:#021b2c;
+    --card-blue:#0f4ea8;
+    --accent:#3b82f6;
+    --muted:#94a3b8;
+    --ease: cubic-bezier(.2,.9,.3,1);
+  }
+
+  .container{max-width:1200px;margin:0 auto;padding:20px}
+
+  /* ---------- NAV BOX ---------- */
+  .nav-box{
+    background:var(--nav-blue);
+    color:#fff;
+    padding:12px 18px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(2,27,44,0.28);
+    display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;
+    position:sticky;top:14px;z-index:30;
+  }
+  .nav-left{display:flex;align-items:center;gap:12px}
+  .logo-img{width:70px;height:70px;object-fit:contain;border-radius:8px;padding:6px;background:#fff}
+  .brand-title{font-weight:800;font-size:18px;color:#fff}
+  .brand-sub{font-size:13px;color:rgba(255,255,255,0.92)}
+  .nav-links{display:flex;gap:10px;align-items:center}
+  .nav-links a{color:rgba(255,255,255,0.95);font-weight:700;padding:8px 10px;border-radius:8px;transition:all .22s var(--ease)}
+  .nav-links a:hover{background:rgba(255,255,255,0.06);transform:translateY(-2px)}
+
+  /* ---------- HERO (full-width section look but limited container) ---------- */
+  .hero{
+    display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:center;margin-bottom:22px;
+  }
+  .hero-left{
+    background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.06)), url('https://images.unsplash.com/photo-1580281657529-779824d29309?auto=format&fit=crop&w=1400&q=60');
+    background-size:cover;background-position:center;border-radius:14px;padding:36px;color:#fff;min-height:320px;display:flex;flex-direction:column;justify:center;
+    position:relative;overflow:hidden;
+  }
+  .hero-left::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,27,44,0.28), rgba(2,27,44,0.18))}
+  .hero-inner{position:relative;z-index:2;max-width:680px}
+  .hero h1{font-size:32px;margin-bottom:12px;line-height:1.05}
+  .hero p.lead{margin-bottom:16px;color:rgba(255,255,255,0.95);font-size:15px}
+  .btn-cta{display:inline-block;padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,#ff7a7a,#ffb199);font-weight:800;color:#fff}
+
+  .hero-right{
+    border-radius:14px;overflow:hidden;min-height:320px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 40px rgba(2,27,44,0.06);
+    position:relative;padding:18px;
+  }
+  .hero-right .visual{
+    width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  }
+  .hero-right .visual img{max-width:220px;opacity:0.98}
+
+  /* ---------- SECTION LAYOUT (full horizontal backgrounds) ---------- */
+  section.full-dark{background:var(--footer-blue);color:#e6f5ff;padding:36px 20px;margin-bottom:18px;border-radius:0}
+  section.full-light{background:#f7fbff;color:#0f172a;padding:36px 20px;margin-bottom:18px;border-radius:0}
+  section.inner { max-width:1200px;margin:0 auto }
+
+  /* ---------- CTA CARDS (dark cards on light background) ---------- */
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap}
+  .cta-card{
+    flex:1 1 220px;min-width:220px;background:var(--card-blue);color:#fff;padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(8,12,30,0.08);
+    transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .cta-card h4{font-size:18px;margin-bottom:4px}
+  .cta-card p{color:rgba(255,255,255,0.93);font-size:14px}
+  .cta-card .cta-small{margin-top:auto}
+  .cta-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 20px 40px rgba(8,12,30,0.14)}
+
+  /* ---------- IMPACT (stats across full-dark) ---------- */
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+  .stat{background:transparent;border-radius:10px;padding:20px;text-align:center}
+  .stat .num{font-size:30px;font-weight:900;color:#fff}
+  .stat .label{color:rgba(255,255,255,0.9);margin-top:8px}
+
+  /* ---------- HOSPITAL CARDS (dark cards on light bg) ---------- */
+  .hosp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+  .hosp-card{background:var(--card-blue);color:#fff;padding:16px;border-radius:12px;box-shadow:0 10px 30px rgba(8,12,30,0.08);display:flex;flex-direction:column;gap:10px;align-items:flex-start;transition:transform .25s var(--ease)}
+  .hosp-card:hover{transform:translateY(-8px)}
+  .hosp-icon{width:36px;height:36px;opacity:0.95}
+  .hosp-title{font-weight:800;margin-top:4px}
+
+  /* ---------- TESTIMONIALS (Voice of Hope) full-dark with white text for headings, white cards inside) ---------- */
+  .voice-row{margin-top:12px}
+  .carousel{display:flex;gap:12px;overflow-x:auto;scroll-behavior:smooth;padding:8px 6px}
+  .card-test{flex:0 0 calc(33.333% - 12px);min-width:260px;background:#fff;padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(8,12,30,0.06);transition:transform .2s}
+  .card-test:hover{transform:translateY(-6px)}
+  .carousel-controls{display:flex;gap:8px;position:relative;justify-content:flex-end;margin-bottom:6px}
+
+  /* ---------- FAQ (on light background but items become dark cards like locations) ---------- */
+  .faq-grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);margin-top:12px}
+  .faq-item{background:var(--card-blue);color:#fff;padding:14px;border-radius:10px;box-shadow:0 10px 30px rgba(8,12,30,0.08);cursor:pointer;transition:transform .22s var(--ease)}
+  .faq-item:hover{transform:translateY(-6px)}
+  .faq-q{font-weight:800}
+  .faq-a{margin-top:8px;color:rgba(255,255,255,0.95);display:none}
+
+  /* ---------- CONTACT (dark full-light or full-dark? user asked contacts as cards blue; we'll use dark card centered inside light section) ---------- */
+  .contact-inner{display:flex;justify-content:center}
+  .contact-card{background:var(--card-blue);color:#fff;padding:24px;border-radius:12px;max-width:760px;width:100%;box-shadow:0 14px 40px rgba(8,12,30,0.12)}
+  .contact-card input,.contact-card textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef8;background:#fff;color:#0f172a;margin-top:8px}
+  .btn-save{background:#fff;color:var(--card-blue);padding:10px 14px;border-radius:10px;border:none;font-weight:800;cursor:pointer;margin-top:12px}
+
+  /* ---------- FOOTER (three horizontal columns) ---------- */
+  footer{background:var(--footer-blue);color:#fff;padding:28px;border-radius:8px;margin-top:12px}
+  .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;align-items:start}
+  .footer-left{display:flex;gap:12px;align-items:center}
+  .footer-logo{width:72px;height:72px;background:#fff;padding:8px;border-radius:8px;object-fit:contain}
+  .footer-links a{display:block;color:#cfe8ff;margin-bottom:6px;font-weight:700}
+  .socials a{display:inline-block;margin-right:10px;color:#fff;opacity:0.95}
+
+  /* ---------- ANIMATIONS (scroll reveal) ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+  .reveal.in-view{opacity:1;transform:none}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1100px){
+    .hero{grid-template-columns:1fr 320px}
+    .stats-grid{grid-template-columns:repeat(2,1fr)}
+    .hosp-grid{grid-template-columns:repeat(2,1fr)}
+    .carousel .card-test{flex:0 0 calc(50% - 12px)}
+    .faq-grid{grid-template-columns:1fr}
+    .footer-grid{grid-template-columns:1fr}
+  }
+  @media (max-width:700px){
+    .hero{grid-template-columns:1fr}
+    .hero-right{order:-1}
+    .cta-row{flex-direction:column}
+    .hosp-grid{grid-template-columns:1fr}
+    .carousel .card-test{flex:0 0 100%}
+  }
+</style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- NAV BOX -->
+    <nav class="nav-box" role="navigation" aria-label="Main navigation">
+      <div class="nav-left">
+        <img src="download.png" alt="Jarurat Care logo" class="logo-img" onerror="this.style.display='none'">
+        <div>
+          <div class="brand-title">Jarurat Care</div>
+          <div class="brand-sub">Cancer Awareness & Support</div>
+        </div>
+      </div>
+
+      <div class="nav-links" role="menubar">
+        <a href="#about">About</a>
+        <a href="#ctas">Services</a>
+        <a href="#impact">Impact</a>
+        <a href="#hospitals">Hospitals</a>
+        <a href="#voice">Stories</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <!-- HERO (left: text + button, right: logo + medical image placeholder) -->
+    <section id="hero" class="hero">
+      <div class="hero-left reveal">
+        <div class="hero-inner">
+          <h1>Jarurat Care — Jaisi Jarurat, Vaisi Care</h1>
+          <p class="lead">Providing compassionate support, clear guidance, and practical help for cancer patients and their families. We stand with you—every step of the way, so no one faces this journey alone.</p>
+          <a class="btn-cta" href="#contact">Seek Cancer Support</a>
+        </div>
+      </div>
+
+      <div class="hero-right reveal">
+        <div class="visual" aria-hidden="false">
+          <img src="https://images.unsplash.com/photo-1586773860414-8f6d6d3b6d92?auto=format&fit=crop&w=800&q=60" alt="medical placeholder">
+          <img src="download.png" alt="Jarurat Care logo" style="width:140px">
+          <div style="color:#334155;font-size:14px;text-align:center">Community • Mentorship • Care</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT (full-dark horizontal section) -->
+    <section id="about" class="full-dark reveal">
+      <div class="inner">
+        <h2 style="color:#e6f5ff">About Jarurat Care</h2>
+        <p style="margin-top:8px;color:#d6eefc">Jarurat Care builds a community-first support system for people affected by cancer — focusing on early detection awareness, caregiver mentorship, financial & emotional support, and connections with medical resources across India.</p>
+      </div>
+    </section>
+
+    <!-- CTA CARDS (light horizontal section with dark cards) -->
+    <section id="ctas" class="full-light reveal">
+      <div class="inner">
+        <h2>Our Services</h2>
+        <div class="cta-row" style="margin-top:12px">
+          <article class="cta-card">
+            <h4>Patient Support</h4>
+            <p>Assistance with treatment navigation, counseling and peer mentorship to guide families through care.</p>
+            <a class="cta-small btn-cta" href="#contact">Seek Support</a>
+          </article>
+
+          <article class="cta-card">
+            <h4>Donate</h4>
+            <p>Help fund treatments and support services. Every donation brings hope and practical help to families in need.</p>
+            <a class="cta-small btn-cta" href="#contact">Donate</a>
+          </article>
+
+          <article class="cta-card">
+            <h4>Book Appointment</h4>
+            <p>Get help finding the right specialist or booking a consultation with partner hospitals and doctors.</p>
+            <a class="cta-small btn-cta" href="#hospitals">Find Hospitals</a>
+          </article>
+
+          <article class="cta-card">
+            <h4>Volunteer</h4>
+            <p>Join as a mentor, fundraiser or community volunteer — make a direct impact in patient journeys.</p>
+            <a class="cta-small btn-cta" href="#contact">Join Us</a>
+          </article>
+
+          <article class="cta-card">
+            <h4>Resources</h4>
+            <p>Access guides, workshops and educational material for early detection and caregiver training.</p>
+            <a class="cta-small btn-cta" href="#about">Learn More</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPACT (full-dark horizontal section) -->
+    <section id="impact" class="full-dark reveal">
+      <div class="inner">
+        <h2 style="color:#e6f5ff">Our Impact</h2>
+        <p style="color:#cfe8ff;margin-top:8px">Real numbers from Jarurat Care’s work across communities.</p>
+
+        <div class="stats-grid">
+          <div class="stat"><div class="num">54</div><div class="label">Mentors</div></div>
+          <div class="stat"><div class="num">28</div><div class="label">Doctors</div></div>
+          <div class="stat"><div class="num">1245</div><div class="label">People helped</div></div>
+          <div class="stat"><div class="num">150+</div><div class="label">Patients assisted</div></div>
+          <div class="stat"><div class="num">2000</div><div class="label">People reached</div></div>
+          <div class="stat"><div class="num">95%</div><div class="label">Early treatments initiated</div></div>
+        </div>
+        <p style="margin-top:12px;color:#9fc9ff;font-size:13px">(Impact figures sourced from Jarurat Care’s public site.)</p>
+      </div>
+    </section>
+
+    <!-- HOSPITALS (light horizontal section with location cards dark) -->
+    <section id="hospitals" class="full-light reveal">
+      <div class="inner">
+        <h2>Find the nearest hospital to you</h2>
+        <p style="margin-top:8px;color:var(--muted)">Select a city to find nearby registered partner hospitals and resources.</p>
+
+        <div class="hosp-grid">
+          <!-- Delhi with Taj Mahal outline (placeholder icon) -->
+          <div class="hosp-card">
+            <!-- small vector outline (placeholder) -->
+            <svg class="hosp-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 3L20 8v6a1 1 0 0 1-1 1h-3v3h-2v-3H10v3H8v-3H5a1 1 0 0 1-1-1V8l7-5z" stroke="#fff" stroke-width="1.2" fill="none"/>
+            </svg>
+            <div class="hosp-title">Delhi</div>
+            <select onchange="showHospitals(this.value,'delhi-list')">
+              <option value="">Choose area</option>
+              <option>All Delhi</option><option>South Delhi</option><option>West Delhi</option><option>New Delhi</option>
+            </select>
+            <div id="delhi-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: AIIMS, Fortis, Max (example)</div>
+          </div>
+
+          <!-- Mumbai (Gateway outline placeholder) -->
+          <div class="hosp-card">
+            <svg class="hosp-icon" viewBox="0 0 24 24" fill="none"><path d="M2 20h20" stroke="#fff" stroke-width="1.2"/><path d="M6 16V8a6 6 0 0 1 12 0v8" stroke="#fff" stroke-width="1.2"/></svg>
+            <div class="hosp-title">Mumbai</div>
+            <select onchange="showHospitals(this.value,'mumbai-list')">
+              <option value="">Choose area</option><option>All Mumbai</option><option>South Mumbai</option><option>Thane</option>
+            </select>
+            <div id="mumbai-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: Tata Memorial, Kokilaben (example)</div>
+          </div>
+
+          <!-- Bengaluru (placeholder outline) -->
+          <div class="hosp-card">
+            <svg class="hosp-icon" viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="#fff" stroke-width="1.2"/><path d="M6 8v8" stroke="#fff" stroke-width="1.2"/><path d="M18 8v8" stroke="#fff" stroke-width="1.2"/></svg>
+            <div class="hosp-title">Bengaluru</div>
+            <select onchange="showHospitals(this.value,'bangalore-list')">
+              <option value="">Choose area</option><option>All Bengaluru</option><option>Whitefield</option><option>Koramangala</option>
+            </select>
+            <div id="bangalore-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: St. John's, Manipal (example)</div>
+          </div>
+
+          <!-- Pune -->
+          <div class="hosp-card">
+            <svg class="hosp-icon" viewBox="0 0 24 24" fill="none"><path d="M12 4v16" stroke="#fff" stroke-width="1.2"/></svg>
+            <div class="hosp-title">Pune</div>
+            <select onchange="showHospitals(this.value,'pune-list')">
+              <option value="">Choose area</option><option>All Pune</option><option>Camp</option><option>Kothrud</option>
+            </select>
+            <div id="pune-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: Ruby Hall, Aditya (example)</div>
+          </div>
+
+          <!-- Chandigarh -->
+          <div class="hosp-card">
+            <svg class="hosp-icon" viewBox="0 0 24 24" fill="none"><path d="M3 7h18" stroke="#fff" stroke-width="1.2"/><path d="M3 12h18" stroke="#fff" stroke-width="1.2"/></svg>
+            <div class="hosp-title">Chandigarh</div>
+            <select onchange="showHospitals(this.value,'chd-list')">
+              <option value="">Choose area</option><option>All Chandigarh</option><option>Sector 17</option><option>Mohali</option>
+            </select>
+            <div id="chd-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: PGI Chandigarh (example)</div>
+          </div>
+
+          <!-- Lucknow -->
+          <div class="hosp-card">
+            <svg class="hosp-icon" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 6-7 6-7-6 7-6z" stroke="#fff" stroke-width="1.2"/></svg>
+            <div class="hosp-title">Lucknow</div>
+            <select onchange="showHospitals(this.value,'lko-list')">
+              <option value="">Choose area</option><option>All Lucknow</option><option>Aliganj</option><option>Kakori</option>
+            </select>
+            <div id="lko-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: KGMU (example)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VOICE OF HOPE (full-dark horizontal section; cards white) -->
+    <section id="voice" class="full-dark reveal">
+      <div class="inner">
+        <h2 style="color:#e6f5ff">Voice of Hope</h2>
+        <p style="color:#cfe8ff;margin-top:8px">Stories from people we've supported.</p>
+
+        <div class="voice-row">
+          <div class="carousel" id="carousel" aria-live="polite">
+            <div class="card-test"><strong>Tulsi Devi</strong><div style="margin-top:8px;color:#475569">"Jarurat Care stepped in when we needed help the most..."</div><div style="margin-top:10px;font-size:13px;color:#94a3b8">Haldwani</div></div>
+            <div class="card-test"><strong>Mayuri</strong><div style="margin-top:8px;color:#475569">"Their financial assistance and guidance helped my family..."</div><div style="margin-top:10px;font-size:13px;color:#94a3b8">Pune</div></div>
+            <div class="card-test"><strong>Ashok</strong><div style="margin-top:8px;color:#475569">"They connected us with counselors who understood our pain..."</div><div style="margin-top:10px;font-size:13px;color:#94a3b8">Mohali</div></div>
+            <div class="card-test"><strong>Leelavati</strong><div style="margin-top:8px;color:#475569">"Jarurat Care offered financial help and emotional support..."</div><div style="margin-top:10px;font-size:13px;color:#94a3b8">Pithoragarh</div></div>
+            <div class="card-test"><strong>Mahendra</strong><div style="margin-top:8px;color:#475569">"Their kindness and empathy made a world of difference..."</div><div style="margin-top:10px;font-size:13px;color:#94a3b8">Mumbai</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ (light full section; items are dark cards) -->
+    <section id="faq" class="full-light reveal">
+      <div class="inner">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <div class="faq-q">How can I seek help from Jarurat Care?</div>
+            <div class="faq-a">Use the contact form below or call our helpline. Provide patient details and location so we can connect you with mentors and resources.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">How do donations help?</div>
+            <div class="faq-a">Donations fund treatments, counseling, hospital navigation, and community programs that support patients.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">Can I volunteer?</div>
+            <div class="faq-a">Yes — we welcome mentors, fundraisers, and outreach volunteers. Fill the contact form and mention volunteering.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">Is Jarurat Care available nationwide?</div>
+            <div class="faq-a">We work across cities and rural regions through a growing network of mentors and partner hospitals.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT (light section, centered blue contact card) -->
+    <section id="contact" class="full-light reveal">
+      <div class="inner">
+        <div style="text-align:center;color:#0f172a">
+          <h2>Contact / Seek Support</h2>
+          <p style="color:var(--muted);margin-top:8px">Fill the form below and a Jarurat Care representative will reach out. The form saves locally (no backend). If urgent, contact local emergency services.</p>
+        </div>
+
+        <div class="contact-inner" style="margin-top:18px">
+          <div class="contact-card reveal">
+            <form id="contactForm" novalidate>
+              <input id="name" type="text" placeholder="Your name" required aria-label="Your name">
+              <input id="email" type="email" placeholder="name@example.com" required aria-label="Email" style="margin-top:8px">
+              <textarea id="message" rows="5" placeholder="Write your message (patient details, location, contact)..." required style="margin-top:8px"></textarea>
+              <div style="text-align:center"><button type="submit" class="btn-save">Save</button></div>
+              <div id="formStatus" style="margin-top:10px;text-align:center;color:#dff3ff;font-weight:700"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER: horizontal three columns -->
+    <footer class="reveal">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-left">
+            <img src="download.png" alt="logo" class="footer-logo" onerror="this.style.display='none'">
+            <div>
+              <div style="font-weight:800">Jarurat Care</div>
+              <div style="font-size:13px;color:#cfe8ff">Jaisi Jarurat, Vaisi Care</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-weight:800;margin-bottom:10px">Quick Links</div>
+          <div class="footer-links">
+            <a href="#about">About</a>
+            <a href="#ctas">Services</a>
+            <a href="#impact">Impact</a>
+            <a href="#voice">Stories</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-weight:800;margin-bottom:10px">Follow Us</div>
+          <div class="socials">
+            <a href="#" aria-label="Facebook">Facebook</a>
+            <a href="#" aria-label="Instagram">Instagram</a>
+            <a href="#" aria-label="LinkedIn">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;text-align:center;color:#9fc9ff;font-size:13px">© <span id="year"></span> Jarurat Care — All rights reserved</div>
+    </footer>
+  </div>
+
+<!-- ---------- SCRIPTS: reveal, carousel, contact, faq ---------- -->
+<script>
+  // year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // IntersectionObserver for reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in-view');
+      }
+    });
+  }, {threshold:0.12});
+  reveals.forEach(r=>obs.observe(r));
+
+  // Hospitals placeholder
+  function showHospitals(val, elId){
+    const el = document.getElementById(elId);
+    if(!el) return;
+    el.textContent = val ? ('Hospitals for '+val+': (example list).') : 'Hospitals: Browse options above.';
+  }
+
+  // Contact form save -> localStorage, no visible drafts
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+  form && form.addEventListener('submit', function(e){
+    e.preventDefault();
+    status.textContent = '';
+    const name = (document.getElementById('name').value||'').trim();
+    const email = (document.getElementById('email').value||'').trim();
+    const msg = (document.getElementById('message').value||'').trim();
+    if(!name||!email||!msg){ status.textContent='Please fill all fields.'; return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ status.textContent='Enter a valid email address.'; return; }
+    const raw = localStorage.getItem('jc_messages')||'[]';
+    let arr=[];
+    try{ arr = JSON.parse(raw);}catch(e){ arr=[]; }
+    arr.unshift({name,email,msg,t:Date.now()});
+    localStorage.setItem('jc_messages', JSON.stringify(arr.slice(0,200)));
+    form.reset();
+    status.textContent = 'Saved locally — thank you!';
+    setTimeout(()=>status.textContent='',3200);
+  });
+
+  // Carousel auto-scroll + controls
+  const carousel = document.getElementById('carousel');
+  let autoTimer = null;
+  function startAuto(){
+    stopAuto();
+    autoTimer = setInterval(()=> {
+      if(!carousel) return;
+      carousel.scrollBy({left: carousel.clientWidth/3 + 12, behavior:'smooth'});
+      if(carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10){
+        setTimeout(()=>carousel.scrollTo({left:0,behavior:'smooth'}),500);
+      }
+    }, 3500);
+  }
+  function stopAuto(){ if(autoTimer) clearInterval(autoTimer); }
+  startAuto();
+  carousel && carousel.addEventListener('mouseenter', stopAuto);
+  carousel && carousel.addEventListener('mouseleave', startAuto);
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.addEventListener('click', ()=>{
+      const a = item.querySelector('.faq-a');
+      const isOpen = a.style.display === 'block';
+      document.querySelectorAll('.faq-a').forEach(x=>x.style.display='none');
+      a.style.display = isOpen ? 'none' : 'block';
+    });
+  });
+
+  // small accessibility: focus visible on links
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Tab') document.body.classList.add('user-is-tabbing');
+  });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,975 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>VitalCare Hospital — Care you can count on.z</title>
+<meta name="description" content="VitalCare Hospital — community-led cancer support for patients & families."/>
+<style>
+  /* ---------- RESET & BASE ---------- */
+  *{
+    box-sizing:border-box;
+    margin:0;
+    padding:0
+  }
+  html,body{
+    height:100%;
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#0f172a;
+    background:#f5f7fb;
+    scroll-behavior:smooth
+  }
+  a{
+    color:inherit;
+    text-decoration:none
+  }
+  img{
+    max-width:100%;
+    display:block;
+    line-height:0
+  }
+
+  :root{
+    --footer-blue:#021b2c;    /* user-specified footer/nav blue */
+    --nav-blue:#021b2c;
+    --card-blue:#0f4ea8;      /* deep blue for cards */
+    --service-mid:#219de0;    /* darker in-between (services bg) */
+    --muted:#94a3b8;
+    --ease: cubic-bezier(.2,.9,.3,1);
+    --nav-height:72px;
+  }
+
+  /* reserve space for fixed footer */
+  body{
+    padding-bottom:calc(var(--footer-height) + 20px);
+  }
+
+  .container{
+    max-width:1200px;
+    margin:0 auto;
+    padding:18px
+  }
+
+  /* ---------- NAV BOX (fixed) ---------- */
+  .nav-box{
+    background:var(--nav-blue);
+    color:#fff;
+    padding:8px 14px;
+    border-radius:10px;
+    box-shadow:0 8px 28px rgba(2,27,44,0.28);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    position:fixed;
+    top:12px;
+    left:18px;
+    right:18px;
+    z-index:120;
+    height:var(--nav-height);
+  }
+  .nav-left{
+    display:flex;
+    align-items:center;
+    gap:12px
+  }
+  .logo-img{
+    width:56px;
+    height:56px;
+    object-fit:contain;
+    border-radius:8px;
+    padding:6px;
+    background:#fff
+  }
+  .brand-title{
+    font-weight:800;
+    font-size:16px;
+    color:#fff;
+    line-height:1
+  }
+  .brand-sub{
+    font-size:12px;
+    color:rgba(255,255,255,0.92)
+  }
+  .nav-links{
+    display:flex;
+    gap:8px;
+    align-items:center
+  }
+  .nav-links a{
+    color:rgba(255,255,255,0.95);
+    font-weight:700;
+    padding:6px 8px;
+    border-radius:8px;
+    font-size:14px;
+    transition:all .16s var(--ease);
+  }
+  .nav-links a:hover{
+    background:rgba(255,255,255,0.06);transform:translateY(-2px)}
+
+  /* spacer to prevent content hiding under fixed nav */
+  .nav-spacer{
+    height:calc(var(--nav-height) + 12px);
+  }
+  @media (max-width: 720px) {
+    .brand-sub {
+      display: none;
+    }
+  }
+
+  /* ---------- HERO (single background image behind text) ---------- */
+  .hero-wrap{
+    width:100%;
+    margin-bottom:18px
+  }
+  .hero{
+    min-height:360px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:24px;
+    padding:38px 24px;
+    color:#fff;
+    background-size:cover;
+    background-position:center right;
+    position:relative;
+    border-radius:12px;
+    overflow:hidden;
+    /* Use local image; make sure HandsHold.png exists next to index.html */
+    background-image: url('HandsHold.png');
+    background-repeat:no-repeat;
+    background-position: center right;
+    background-size:cover;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(2,27,44,0.46), rgba(2,27,44,0.18));
+    pointer-events:none
+  }
+  .hero-left{
+    position:relative;
+    z-index:2;
+    max-width:66%
+  }
+  .hero h1{
+    font-size:30px;
+    margin-bottom:10px;
+    line-height:1.02
+  }
+  .hero p.lead{
+    margin-bottom:16px;
+    color:rgba(255,255,255,0.96);
+    max-width:62ch
+  }
+  .btn-cta{
+    display:inline-block;
+    padding:10px 14px;
+    border-radius:10px;
+    background:linear-gradient(90deg,#ff7a7a,#ffb199);
+    font-weight:800;
+    color:#fff;
+    transition:transform .18s
+  }
+  .btn-cta:hover{
+    transform:translateY(-4px)
+  }
+
+  /* ---------- ABOUT full-width split into two halves ---------- */
+  .about-full {
+    width:100%;
+    display:flex;
+    gap:0;
+    margin-bottom:18px;
+    min-height:240px;
+  }
+  .about-left, .about-right {
+    padding:36px;
+    flex:1;
+  }
+  .about-left {
+    background:var(--footer-blue);
+    color:#e6f5ff;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .about-right {
+    background-size:cover;
+    background-position:center;
+  }
+
+  /* ---------- SERVICES full-width (make like about) ---------- */
+  .services-full { 
+    width:100%;
+    background:var(--service-mid);
+    padding:28px 0;
+    margin-bottom:18px;
+  }
+  .services-inner {
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 18px;
+  }
+  .services-grid {
+    display:grid;
+    gap:14px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* fits to screen; no horiz scroll */
+    align-items:start;
+  }
+  .svc-card{
+    background:var(--card-blue);
+    color:#fff; 
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 12px 34px rgba(8,12,30,0.12);
+    transition:transform .18s var(--ease),box-shadow .18s var(--ease);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .svc-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 26px 48px rgba(8,12,30,0.18)
+  }
+
+  /* ---------- IMPACT full-width horizontal section (dark background) ---------- */
+  .impact-full{
+    width:100%;
+    background:var(--footer-blue);
+    color:#e6f5ff;
+    padding:28px 0;
+    margin-bottom:18px;
+  }
+  .impact-inner{
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 18px;
+  }
+  .stats-grid{
+    display:grid; gap:12px;
+    margin-top:18px;
+  }
+  @media (min-width:1400px) {
+    .stats-grid {
+      grid-template-columns: repeat(6, 1fr); 
+    }
+  }
+  @media (min-width:1000px) and (max-width:1399px) {
+    .stats-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+  @media (min-width:700px) and (max-width:999px) {
+    .stats-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width:699px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    } 
+  }
+  .stat{
+    background:rgba(255,255,255,0.03);
+    padding:18px;
+    border-radius:10px;
+    text-align:center
+  }
+
+  /* ---------- HOSPITALS ---------- */
+.hosp-section {
+  background: #f7fbff;
+  padding: 28px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+}
+
+.hosp-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+/* FLEX container */
+.hosp-grid {
+  display: flex;
+  flex-wrap: wrap; /* allows items to wrap */
+  gap: 12px; /* spacing between cards */
+}
+
+/* FLEX items width for responsiveness */
+.hosp-grid .hosp-card {
+  flex: 1 1 calc(33.333% - 8px); /* 3 per row minus half the gap */
+}
+
+/* Medium screens: 2 per row */
+@media (max-width: 999px) {
+  .hosp-grid .hosp-card {
+    flex: 1 1 calc(50% - 6px); /* 2 per row */
+  }
+}
+
+/* Small screens: 1 per row */
+@media (max-width: 699px) {
+  .hosp-grid .hosp-card {
+    flex: 1 1 100%; /* full width */
+  }
+}
+
+.hosp-card {
+  background: var(--card-blue);
+  color: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(8,12,30,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform .18s var(--ease);
+}
+
+.hosp-card:hover {
+  transform: translateY(-8px);
+}
+
+.hosp-icon {
+  width: 46px;
+  height: 46px;
+  opacity: 0.98;
+}
+
+.hosp-select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 6px 18px rgba(8,12,30,0.06);
+  font-size: 14px;
+}
+
+
+  /* ---------- VOICE OF HOPE full-width ---------- */
+  .voice-full{
+    width:100%;
+    background:var(--footer-blue);
+    padding:28px 0;
+    margin-bottom:18px;
+  }
+  .voice-inner{
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 18px;
+  }
+  .carousel{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    padding:12px 6px;
+  }
+  .card-test{
+    flex:0 0 320px;
+    min-width:260px;
+    background:#fff;
+    color:#0f172a;
+    padding:16px;
+    border-radius:10px;
+    box-shadow:0 12px 36px rgba(8,12,30,0.08);
+    transition:transform .18s 
+  }
+  .card-test:hover{ 
+    transform:translateY(-6px)
+  }
+  .card-test .name{ font-weight:900;
+    font-size:16px; 
+    margin-bottom:6px;
+    color:#09203a
+  }
+
+  /* ---------- FAQ 2-col ---------- */
+  .faq-section{
+    background:#f7fbff;
+    padding:28px;
+    margin-bottom:18px;
+    border-radius:10px;
+  }
+  .faq-inner{
+    max-width:max-content; 
+    margin:0 auto;
+    padding: 0px 18px
+    }
+  .faq-grid{
+    display:grid;
+    gap:12px; 
+    grid-template-columns: repeat(2,1fr);
+  }
+  @media (max-width:250px){ 
+    .faq-grid{
+      grid-template-columns: 1fr;
+    }
+  }
+  .faq-item{
+    background:var(--card-blue);
+    color:#fff; padding:14px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:transform .16s var(--ease)
+  }
+  .faq-item:hover{
+    transform:translateY(-6px)
+  }
+  .faq-q{
+    font-weight:800
+  }
+  .faq-a{
+    margin-top:8px;
+    color:rgba(255,255,255,0.95);
+    display:none
+  }
+
+  /* ---------- CONTACT constrained width ---------- */
+  .contact-section{ 
+    background:#f7fbff;
+    padding:28px;
+    margin-bottom:18px;
+    border-radius:10px;
+  }
+  .contact-inner{
+    display:flex;
+    justify-content:center;
+  }
+  .contact-card{ 
+    max-width:520px; 
+    width:100%; background:var(--card-blue);
+    color:#fff;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 14px 40px rgba(8,12,30,0.12)
+  }
+  .contact-card input, .contact-card textarea{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+    margin-top:8px;
+    font-size:14px
+  }
+  .contact-card input{
+    background:#fff;
+    color:#0f172a
+  }
+  .btn-save{
+    background:#fff;
+    color:var(--card-blue);
+    padding:10px 14px;
+    border-radius:10px;
+    border:none;
+    font-weight:800;
+    cursor:pointer;
+    margin-top:12px;
+  }
+
+  /* ---------- FOOTER ---------- */
+footer {
+  position: relative;
+  width: 100%;
+  background: var(--footer-blue);
+  color: #fff;
+  padding: 36px 18px;
+  box-shadow: 0 -6px 24px rgba(2,27,44,0.12);
+  z-index: 40;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* 3 columns grid on desktop; stacks on small screens */
+.footer-grid {
+  max-width: 1200px; /* fixed to reasonable desktop width */
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 horizontal columns */
+  gap: 24px;
+  align-items: start;
+  width: 100%;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.footer-logo {
+  width: 72px;
+  height: 72px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+/* links and socials */
+.footer-links a {
+  display: block;
+  color: #cfe8ff;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.footer-links a:hover { 
+  text-decoration: underline;
+}
+
+.socials {
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.socials a {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  background: rgba(255,255,255,0.04);
+  color:#fff;
+  text-decoration:none;
+}
+.socials a svg {
+  width:18px;
+  height:18px;
+  display:block;
+}
+
+/* copyright row under columns */
+.footer-bottom {
+  max-width:1200px;
+  margin: 16px auto 0;
+  text-align:center;
+  color:#9fc9ff;
+  font-size:13px;
+}
+
+/* responsive: stack columns on small screens */
+@media (max-width:500px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .footer-left {
+    align-items:flex-start;
+  }
+  .footer-logo {
+    width:60px;
+    height:60px;
+  }
+  .socials a {
+    width:36px;
+    height:36px;
+  }
+}
+</style>
+</head>
+<body>
+
+  <!-- fixed nav + spacer -->
+  <nav class="nav-box reveal" role="navigation" aria-label="Main">
+    <div class="nav-left">
+      <img src="download.png" alt="logo" class="logo-img" onerror="this.style.display='none'">
+      <div>
+        <div class="brand-title">VitalCare Hospital</div>
+        <div class="brand-sub">Cancer Awareness & Support</div>
+      </div>
+    </div>
+
+    <div class="nav-links" role="menubar">
+      <a href="#about">About</a>
+      <a href="#ctas">Services</a>
+      <a href="#impact">Impact</a>
+      <a href="#hospitals">Hospitals</a>
+      <a href="#voice">Stories</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+  <div class="nav-spacer"></div>
+
+  <!-- HERO (single BG image behind everything) -->
+  <div class="hero-wrap">
+    <section id="hero" class="hero reveal" aria-label="Hero — VitalCare Hospital">
+      <div class="hero-left">
+        <h1>VitalCare Hospital —</h1><h2> Care you can count on.</h2>
+        <p class="lead">Providing compassionate support, clear guidance and practical help for cancer patients and their families — so no one has to face this journey alone.</p>
+        <a class="btn-cta" href="#contact">Seek Cancer Support</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABOUT: full width split into two halves (right half image) -->
+  <section class="about-full reveal" id="about" aria-label="About VitalCare Hospital">
+    <div class="about-left reveal">
+      <h2 style="color:#e6f5ff">About VitalCare Hospital</h2>
+      <p style="margin-top:8px;color:#d6eefc;line-height:1.55">
+        VitalCare Hospital builds a community-first support system for people affected by cancer — focusing on early detection awareness,
+        caregiver mentorship, financial & emotional support, and connections with medical resources across India.
+        We combine local volunteers, medical partners and trained mentors to reduce the isolation families often face.
+      </p>
+    </div>
+    <div class="about-right reveal" style="background-image:url('https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=1200&q=70');">
+      <!-- right half purely image, no visible box -->
+    </div>
+  </section>
+
+  <!-- SERVICES full-width -->
+  <section id="ctas" class="services-full reveal" aria-label="Services">
+    <div class="services-inner reveal">
+      <h2 style="margin:0 0 12px 0;color:#e9f6ff">Our Services</h2>
+      <div class="services-grid">
+        <article class="svc-card reveal" role="listitem">
+          <h4>Patient Support</h4>
+          <p>Practical help with hospital navigation, patient advocacy and peer mentorship.</p>
+          <a class="btn-cta" href="#contact" style="margin-top:auto">Seek Support</a>
+        </article>
+
+        <article class="svc-card reveal" role="listitem">
+          <h4>Donate</h4>
+          <p>Contribute to direct patient assistance, counseling and community programs.</p>
+          <a class="btn-cta" href="#contact" style="margin-top:auto">Donate</a>
+        </article>
+
+        <article class="svc-card reveal" role="listitem">
+          <h4>Book Appointment</h4>
+          <p>Connect with partnered hospitals and specialists for timely consultation.</p>
+          <a class="btn-cta" href="#hospitals" style="margin-top:auto">Find Hospitals</a>
+        </article>
+
+        <article class="svc-card reveal" role="listitem">
+          <h4>Volunteer</h4>
+          <p>Become a mentor, help with outreach, or support logistics and fundraising.</p>
+          <a class="btn-cta" href="#contact" style="margin-top:auto">Join Us</a>
+        </article>
+
+        <article class="svc-card reveal" role="listitem">
+          <h4>Resources</h4>
+          <p>Workshops, detection guides, and caregiver support materials for real-world help.</p>
+          <a class="btn-cta" href="#about" style="margin-top:auto">Learn More</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT full-width -->
+  <section id="impact" class="impact-full reveal" aria-label="Impact">
+    <div class="impact-inner reveal">
+      <h2 style="color:#e6f5ff;margin:0">Our Impact</h2>
+      <p style="color:#cfe8ff;margin-top:8px">Real numbers from VitalCare Hospital’s community programs and outreach.</p>
+
+      <div class="stats-grid" aria-label="Impact statistics">
+        <div class="stat reveal"><div class="num">54</div><div class="label">Mentors</div></div>
+        <div class="stat reveal"><div class="num">28</div><div class="label">Partner Doctors</div></div>
+        <div class="stat reveal"><div class="num">1,245</div><div class="label">People helped</div></div>
+        <div class="stat reveal"><div class="num">150+</div><div class="label">Patients assisted</div></div>
+        <div class="stat reveal"><div class="num">2,000</div><div class="label">People reached</div></div>
+        <div class="stat reveal"><div class="num">95%</div><div class="label">Early treatments initiated</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOSPITALS (light) -->
+  <section id="hospitals" class="hosp-section reveal" aria-label="Hospitals">
+    <div class="hosp-inner reveal">
+      <h2 style="margin:0 0 6px 0">Find the nearest hospital to you</h2>
+      <p class="muted" style="margin-bottom:12px">Select your city and area to view partner hospitals and resources.</p>
+
+      <div class="hosp-grid">
+        <!-- Delhi: monument-like + pin -->
+        <div class="hosp-card reveal">
+          <img src="taj-mahal.png" height="auto" width="40px">
+          <div class="hosp-title" style="font-weight:800">Delhi</div>
+          <select class="hosp-select" onchange="showHospitals(this.value,'delhi-list')">
+            <option value="">Choose area</option>
+            <option>All Delhi</option>
+            <option>South Delhi</option>
+            <option>West Delhi</option>
+            <option>New Delhi</option>
+          </select>
+          <div id="delhi-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: AIIMS, Fortis, Max (example)</div>
+        </div>
+
+        <!-- Mumbai -->
+        <div class="hosp-card reveal">
+          <img src="gate-of-india.png" height="auto" width=40px">
+          <div class="hosp-title" style="font-weight:800">Mumbai</div>
+          <select class="hosp-select" onchange="showHospitals(this.value,'mumbai-list')">
+            <option value="">Choose area</option>
+            <option>All Mumbai</option>
+            <option>South Mumbai</option>
+            <option>Thane</option>
+          </select>
+          <div id="mumbai-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: Tata Memorial, Kokilaben (example)</div>
+        </div>
+
+        <!-- Bengaluru -->
+        <div class="hosp-card reveal">
+          <img src="bengaluru.png" height="auto" width="50px">
+          <div class="hosp-title" style="font-weight:800">Bengaluru</div>
+          <select class="hosp-select" onchange="showHospitals(this.value,'bangalore-list')">
+            <option value="">Choose area</option>
+            <option>All Bengaluru</option>
+            <option>Whitefield</option>
+            <option>Koramangala</option>
+          </select>
+          <div id="bangalore-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: St. John's, Manipal (example)</div>
+        </div>
+
+        <!-- Pune -->
+        <div class="hosp-card reveal">
+          <img src="pune.png" height="auto" width="50px">
+          <div class="hosp-title" style="font-weight:800">Pune</div>
+          <select class="hosp-select" onchange="showHospitals(this.value,'pune-list')">
+            <option value="">Choose area</option>
+            <option>All Pune</option>
+            <option>Camp</option>
+            <option>Kothrud</option>
+          </select>
+          <div id="pune-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: Ruby Hall, Aditya (example)</div>
+        </div>
+
+        <!-- Chandigarh -->
+        <div class="hosp-card reveal">
+          <img src="chandigarh.png" height="auto" width="50px">
+          <div class="hosp-title" style="font-weight:800">Chandigarh</div>
+          <select class="hosp-select" onchange="showHospitals(this.value,'chd-list')">
+            <option value="">Choose area</option>
+            <option>All Chandigarh</option>
+            <option>Sector 17</option>
+            <option>Mohali</option>
+          </select>
+          <div id="chd-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: PGI Chandigarh (example)</div>
+        </div>
+
+        <!-- Chennai -->
+        <div class="hosp-card reveal">
+          <img src="chennai.png" height="auto" width="50px">
+          <div class="hosp-title" style="font-weight:800"> Chennai </div>
+          <select class="hosp-select" onchange="showHospitals(this.value,'lko-list')">
+            <option value="">Choose area</option>
+            <option>All Chennai</option>
+            <option>Aliganj</option>
+            <option>Kakori</option>
+          </select>
+          <div id="lko-list" style="margin-top:8px;color:rgba(255,255,255,0.95);font-size:14px">Hospitals: KGMU (example)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICE OF HOPE full-width -->
+  <section id="voice" class="voice-full reveal" aria-label="Voice of Hope">
+    <div class="voice-inner reveal">
+      <h2 style="color:#e6f5ff;margin:0 0 8px 0">Voice of Hope</h2>
+      <p style="color:#cfe8ff;margin-top:8px">Stories from people we've supported.</p>
+
+      <div class="carousel" id="carousel" aria-live="polite" style="margin-top:12px">
+        <div class="card-test reveal"><div class="name">Tulsi Devi</div><div style="color:#475569">"VitalCare Hospital stepped in when we needed help the most. Their support eased our burden and gave us hope."</div><div style="margin-top:10px;font-size:13px;color:#94a3b8">Haldwani</div></div>
+
+        <div class="card-test reveal"><div class="name">Mayuri</div><div style="color:#475569">"Their financial assistance and guidance helped my family through a very difficult time."</div><div style="margin-top:10px;font-size:13px;color:#94a3b8">Pune</div></div>
+
+        <div class="card-test reveal"><div class="name">Ashok</div><div style="color:#475569">"They connected us with counselors who understood our pain and offered real help."</div><div style="margin-top:10px;font-size:13px;color:#94a3b8">Mohali</div></div>
+
+        <div class="card-test reveal"><div class="name">Leelavati</div><div style="color:#475569">"VitalCare Hospital offered financial help and emotional support when we were lost."</div><div style="margin-top:10px;font-size:13px;color:#94a3b8">Pithoragarh</div></div>
+
+        <div class="card-test reveal"><div class="name">Mahendra</div><div style="color:#475569">"Their kindness and empathy made a world of difference in our journey."</div><div style="margin-top:10px;font-size:13px;color:#94a3b8">Mumbai</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ (2 columns) -->
+  <section id="faq" class="faq-section reveal" aria-label="FAQ">
+    <div class="faq-inner reveal">
+      <h2 style="margin:0 0 12px 0">Frequently Asked Questions</h2>
+      <div class="faq-grid">
+        <div class="faq-item reveal"><div class="faq-q">How can I seek help from VitalCare Hospital?</div><div class="faq-a">Use the contact form below or call our helpline. Provide patient details and location so we can connect you with mentors and resources.</div></div>
+
+        <div class="faq-item reveal"><div class="faq-q">How do donations help?</div><div class="faq-a">Donations fund direct patient care, counseling & community outreach programs.</div></div>
+
+        <div class="faq-item reveal"><div class="faq-q">Can I volunteer?</div><div class="faq-a">Yes. Fill the contact form and mention volunteering preferences (mentoring, outreach, fundraising).</div></div>
+
+        <div class="faq-item reveal"><div class="faq-q">Is VitalCare Hospital nationwide?</div><div class="faq-a">We work across cities and rural areas through local mentors and partner hospitals.</div></div>
+
+        <div class="faq-item reveal"><div class="faq-q">How quickly will someone respond?</div><div class="faq-a">Response times vary; we try to connect you to local mentors within 48–72 hours where possible.</div></div>
+
+        <div class="faq-item reveal"><div class="faq-q">Do you provide financial aid?</div><div class="faq-a">We provide targeted financial assistance via vetted programs — availability depends on need and funds.</div></div>
+
+        <div class="faq-item reveal"><div class="faq-q">What information should I share?</div><div class="faq-a">Patient name, age, city, brief medical background and contact number help us connect quickly.</div></div>
+
+        <div class="faq-item reveal"><div class="faq-q">Do you offer counseling?</div><div class="faq-a">Yes — we connect families to trained counselors and peer support groups.</div></div>
+
+        <div class="faq-item reveal"><div class="faq-q">Are your services free?</div><div class="faq-a">Many of our mentorship and information services are free. For funded treatment support, eligibility checks apply.</div></div>
+
+        <div class="faq-item reveal"><div class="faq-q">How can hospitals partner with you?</div><div class="faq-a">Hospitals can reach out via our contact form to discuss partnership and patient support programs.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section reveal" aria-label="Contact">
+    <div style="text-align:center">
+      <h2>Contact / Seek Support</h2>
+      <p class="muted" style="margin-top:8px">Fill the form below and a VitalCare Hospital representative will reach out. If urgent, contact local emergency services.</p>
+    </div>
+
+    <div class="contact-inner" style="margin-top:18px">
+      <div class="contact-card reveal">
+        <form id="contactForm" novalidate>
+          <input id="name" type="text" placeholder="Your name" required aria-label="Your name">
+          <input id="email" type="email" placeholder="name@example.com" required aria-label="Email" style="margin-top:8px">
+          <textarea id="message" rows="5" placeholder="Write your message (brief patient details, location, contact)..." required style="margin-top:8px"></textarea>
+          <div style="text-align:center"><button type="submit" class="btn-save">Save</button></div>
+          <div id="formStatus" style="margin-top:10px;text-align:center;color:#dff3ff;font-weight:700"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER: 3 horizontal columns (fixed) -->
+  <!-- ===== REPLACE FOOTER HTML (put this where your existing <footer> is) ===== -->
+    <footer class="reveal" aria-label="Footer">
+      <div class="footer-grid">
+        <!-- LEFT: logo + tagline -->
+        <div class="footer-col footer-left">
+          <img src="download.png" alt="logo" class="footer-logo" onerror="this.style.display='none'">
+          <div>
+            <div style="font-weight:800">VitalCare Hospital</div>
+            <div style="font-size:13px;color:#cfe8ff">Care you can count on</div>
+          </div>
+        </div>
+    
+        <!-- CENTER: quick links -->
+        <div class="footer-col">
+          <div style="font-weight:800;margin-bottom:6px">Quick Links</div>
+          <div class="footer-links">
+            <a href="#about">About</a>
+            <a href="#ctas">Services</a>
+            <a href="#impact">Impact</a>
+            <a href="#voice">Stories</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+    
+        <!-- RIGHT: socials with icons -->
+        <div class="footer-col">
+          <div style="font-weight:800;margin-bottom:6px">Follow Us</div>
+          <div class="socials" role="navigation" aria-label="Social links">
+            <!-- Facebook (inline SVG) -->
+            <a href="#" aria-label="Facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07c0 4.99 3.66 9.12 8.44 9.92v-7.03H8.08v-2.89h2.36V9.41c0-2.33 1.39-3.62 3.52-3.62.  1.02 0 2.09.18 2.09.18v2.3h-1.17c-1.15 0-1.51.72-1.51 1.46v1.76h2.57l-.41 2.89h-2.16V22C18.34 21.19 22 17.06 22 12.07z" fill="#fff"/>
+              </svg>
+            </a>
+    
+            <!-- Instagram -->
+            <a href="#" aria-label="Instagram" title="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="#fff" stroke-width="1.4" fill="none"/>
+                <circle cx="12" cy="12" r="3" stroke="#fff" stroke-width="1.4" fill="none"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="#fff"/>
+              </svg>
+            </a>
+    
+            <!-- LinkedIn -->
+            <a href="#" aria-label="LinkedIn" title="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 4h4v16H4zM6 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM10 9h3v2.2c.6-1 2-1 3 0V20h-4v-6c0-1.6-2-1.6-2 0V20h-4V9z" fill="#fff"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    
+      <div class="footer-bottom">© <span id="year"></span> VitalCare Hospital — All rights reserved</div>
+    </footer>
+    
+
+<script>
+  // set year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // IntersectionObserver reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=> {
+    entries.forEach(e => {
+      if(e.isIntersecting) e.target.classList.add('in-view');
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => io.observe(r));
+
+  // Hospitals placeholder function
+  function showHospitals(val, elId){
+    const el = document.getElementById(elId);
+    if(!el) return;
+    el.textContent = val ? ('Hospitals for '+val+': (example list).') : 'Hospitals: Browse options above.';
+  }
+
+  // Contact form: local save (no backend)
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+  form && form.addEventListener('submit', function(e){
+    e.preventDefault();
+    status.textContent = '';
+    const name = (document.getElementById('name').value||'').trim();
+    const email = (document.getElementById('email').value||'').trim();
+    const msg = (document.getElementById('message').value||'').trim();
+    if(!name||!email||!msg){ status.textContent='Please fill all fields.'; return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ status.textContent='Enter a valid email address.'; return; }
+    const raw = localStorage.getItem('jc_messages')||'[]';
+    let arr=[];
+    try{ arr = JSON.parse(raw);}catch(e){ arr=[]; }
+    arr.unshift({name,email,msg,t:Date.now()});
+    localStorage.setItem('jc_messages', JSON.stringify(arr.slice(0,200)));
+    form.reset();
+    status.textContent = 'Saved locally — thank you!';
+    setTimeout(()=>status.textContent='',3200);
+  });
+
+  // Carousel: slowed auto-scroll for stories
+  const carousel = document.getElementById('carousel');
+  let autoTimer = null;
+  function startAuto(){
+    stopAuto();
+    autoTimer = setInterval(()=> {
+      if(!carousel) return;
+      carousel.scrollBy({ left: carousel.clientWidth/3 + 16, behavior:'smooth' });
+      if(carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 12){
+        setTimeout(()=> carousel.scrollTo({ left: 0, behavior:'smooth' }), 600);
+      }
+    }, 6000); // slower: 6s
+  }
+  function stopAuto(){ if(autoTimer) clearInterval(autoTimer); }
+  startAuto();
+  carousel && carousel.addEventListener('mouseenter', stopAuto);
+  carousel && carousel.addEventListener('mouseleave', startAuto);
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.addEventListener('click', ()=>{
+      const a = item.querySelector('.faq-a');
+      const open = a.style.display === 'block';
+      document.querySelectorAll('.faq-a').forEach(x=>x.style.display='none');
+      a.style.display = open ? 'none' : 'block';
+    });
+  });
+
+  // keyboard accessibility nicety
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Tab') document.body.classList.add('user-is-tabbing');
+  });
+</script>
+</body>
+</html>

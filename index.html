@@ -66,6 +66,9 @@
     right:18px;
     z-index:120;
     height:var(--nav-height);
+    flex-wrap: wrap;             
+    height: auto;                
+    padding-bottom: 10px;  
   }
   .nav-left{
     display:flex;
@@ -110,10 +113,39 @@
   .nav-spacer{
     height:calc(var(--nav-height) + 12px);
   }
-  @media (max-width: 720px) {
+
+  .hamburger {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color:white
+}
+
+  @media (max-width: 800px) {
     .brand-sub {
       display: none;
     }
+    .hamburger {
+    display: block;
+    }
+    .nav-links{
+      display: none;              
+      flex-direction: column;     
+      width: 100%;                
+      gap: 10px;                  
+      margin-top: 10px;           
+    }
+
+      .nav-links.show {
+        display: flex;
+      }
+  }
+
+  @media (max-width: 750px) {
+
+    
   }
 
   /* ---------- HERO (single background image behind text) ---------- */
@@ -122,7 +154,7 @@
     margin-bottom:18px
   }
   .hero{
-    min-height:600px;
+    min-height:500px;
     display:flex;
     align-items:center;
     justify-content:flex-start;
@@ -216,6 +248,7 @@
     gap:14px;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* fits to screen; no horiz scroll */
     align-items:start;
+    align-items: stretch;
   }
   .svc-card{
     background:var(--card-blue);
@@ -332,6 +365,10 @@
 
 .hosp-card:hover {
   transform: translateY(-8px);
+}
+
+.hosp-card img {
+    filter: brightness(0) invert(100);
 }
 
 .hosp-icon {
@@ -589,6 +626,9 @@ footer {
       </div>
     </div>
 
+    <button class="hamburger" aria-label="Open menu">☰</button>
+
+
     <div class="nav-links" role="menubar">
       <a href="#about">About</a>
       <a href="#ctas">Services</a>
@@ -605,9 +645,9 @@ footer {
   <div class="hero-wrap">
     <section id="hero" class="hero reveal" aria-label="Hero — VitalCare Hospital">
       <div class="hero-left">
-        <h1>VitalCare Hospital —</h1><h2> Care you can count on.</h2>
-        <p class="lead">Providing compassionate support, clear guidance and practical help for cancer patients and their families — so no one has to face this journey alone.</p>
-        <a class="btn-cta" href="#contact">Seek Cancer Support</a>
+        <h1 style="font-size: 4rem">VitalCare Hospital </h1><h2 style="font-size: 3.5vw;"> Care you can count on.</h2>
+        <p class="lead" style="font-size: clamp(1.5rem, 2vw, 2rem)">Providing compassionate support, clear guidance and practical help for cancer patients and their families — so no one has to face this journey alone.</p>
+        <a class="btn-cta" href="#contact" style="font-size: 1.2rem; padding: 1rem 2rem;">Seek Cancer Support</a>
       </div>
     </section>
   </div>
@@ -615,8 +655,8 @@ footer {
   <!-- ABOUT: full width split into two halves (right half image) -->
   <section class="about-full reveal" id="about" aria-label="About VitalCare Hospital">
     <div class="about-left reveal">
-      <h2 style="color:#e6f5ff">About VitalCare Hospital</h2>
-      <p style="margin-top:8px;color:#d6eefc;line-height:1.55">
+      <h2 style="color:#e6f5ff ;font-size: 3.15vw;">About VitalCare Hospital</h2>
+      <p style="margin-top:8px;color:#d6eefc;line-height:1.55; font-size: 1.55vw;">
         VitalCare Hospital builds a community-first support system for people affected by cancer — focusing on early detection awareness,
         caregiver mentorship, financial & emotional support, and connections with medical resources across India.
         We combine local volunteers, medical partners and trained mentors to reduce the isolation families often face.
